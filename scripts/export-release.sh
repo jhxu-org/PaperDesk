@@ -35,7 +35,7 @@ cp Distribution/安装指南.html "$stage_directory/dmg/Installation.html"
 ditto BrowserExtension "$stage_directory/chrome/PaperDesk-Chrome"
 cp LICENSE "$stage_directory/chrome/LICENSE.txt"
 cp Distribution/安装指南.html "$stage_directory/chrome/Installation.html"
-cp Distribution/安装指南.html "$release_directory/安装指南.html"
+cp Distribution/安装指南.html "$release_directory/Installation.html"
 ditto "$app_directory" "$stage_directory/mac-zip/PaperDesk.app"
 cp Distribution/安装指南.html "$stage_directory/mac-zip/Installation.html"
 
@@ -53,5 +53,5 @@ with zipfile.ZipFile(sys.argv[2], 'w', compression=zipfile.ZIP_DEFLATED) as arch
 PY
 
 (cd "$release_directory" && shasum -a 256 "PaperDesk-$version-macOS-universal.dmg" \
-    "PaperDesk-$version-macOS-universal.zip" "PaperDesk-Chrome-$extension_version.zip" 安装指南.html > SHA256SUMS.txt)
+    "PaperDesk-$version-macOS-universal.zip" "PaperDesk-Chrome-$extension_version.zip" Installation.html > SHA256SUMS.txt)
 printf '%s\n' "$release_directory"
