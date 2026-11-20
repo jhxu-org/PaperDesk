@@ -235,28 +235,82 @@ private struct PaperImportDestinationView: View {
     let onImport: (String) -> Void
     @Environment(\.dismiss) private var dismiss
     @State private var folder: String
+    @State private var creatingFolder = false
+    @State private var newFolderName = ""
+    @State private var newFolderParent = ""
+    @State private var folderError: String?
+    @FocusState private var folderNameFocused: Bool
     init(model: AppModel, article: ArxivArticle, initialFolder: String, onImport: @escaping (String) -> Void) {
         self.model = model; self.article = article; self.onImport = onImport
         _folder = State(initialValue: initialFolder)
     }
     private var validFolder: Bool { folder.isEmpty || model.folders.contains { $0.id == folder } }
+    private var validParent: Bool { newFolderParent.isEmpty || model.folders.contains { $0.id == newFolderParent } }
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             Label("选择保存文件夹", systemImage: "folder.badge.plus").font(.title3.weight(.semibold))
             Text(article.title).font(.system(size: 14, weight: .medium)).lineLimit(3).fixedSize(horizontal: false, vertical: true)
-            Picker("保存到", selection: $folder) {
-                Text("未分类").tag("")
-                ForEach(model.folderHierarchy.entries) { entry in Text(entry.path).tag(entry.id) }
-            }.pickerStyle(.menu).accessibilityLabel("论文保存文件夹")
+            HStack(spacing: 12) {
+                Picker("保存到", selection: $folder) {
+                    Text("未分类").tag("")
+                    ForEach(model.folderHierarchy.entries) { entry in Text(entry.path).tag(entry.id) }
+                }.pickerStyle(.menu).accessibilityLabel("论文保存文件夹").disabled(creatingFolder)
+                Button {
+                    newFolderName = ""; newFolderParent = validFolder ? folder : ""
+                    folderError = nil; creatingFolder = true; folderNameFocused = true
+                } label: {
+                    Label("新建文件夹", systemImage: "folder.badge.plus")
+                }.disabled(creatingFolder).accessibilityLabel("导入时新建文件夹")
+            }
+            if creatingFolder {
+                VStack(alignment: .leading, spacing: 12) {
+                    TextField("文件夹名称", text: $newFolderName)
+                        .textFieldStyle(.roundedBorder).focused($folderNameFocused)
+                        .accessibilityLabel("新文件夹名称")
+                    Picker("上级文件夹", selection: $newFolderParent) {
+                        Text("文献库（顶层）").tag("")
+                        ForEach(model.folderHierarchy.entries) { entry in Text(entry.path).tag(entry.id) }
+                    }.pickerStyle(.menu).accessibilityLabel("新文件夹的上级目录")
+                    Text("创建后自动选为保存位置，也可在已有目录下创建子文件夹。")
+                        .font(.caption).foregroundStyle(.secondary)
+                    if !validParent {
+                        Text("上级文件夹已不存在，请重新选择。").font(.caption).foregroundStyle(.red)
+                    }
+                    if let folderError { Text(folderError).font(.caption).foregroundStyle(.red) }
+                    HStack {
+                        Spacer()
+                        Button("取消新建") { cancelFolderCreation() }.keyboardShortcut(.cancelAction)
+                        Button("创建并选中") { createFolder() }
+                            .keyboardShortcut(.defaultAction).buttonStyle(.borderedProminent)
+                            .disabled(newFolderName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || !validParent)
+                    }
+                }.padding(14).background(Palette.subtle, in: RoundedRectangle(cornerRadius: 10))
+            }
             Text("确认后加入后台导入队列，可以继续搜索或阅读。下次会记住此次文件夹选择。")
                 .font(.caption).foregroundStyle(.secondary)
             if !validFolder { Text("该文件夹已不存在，请重新选择保存位置。").font(.caption).foregroundStyle(.red) }
             HStack {
                 Spacer()
-                Button("取消") { dismiss() }.keyboardShortcut(.cancelAction)
-                Button("确认导入") { onImport(folder) }.keyboardShortcut(.defaultAction)
-                    .buttonStyle(.borderedProminent).disabled(!validFolder)
+                if creatingFolder {
+                    Button("取消导入") { dismiss() }
+                } else {
+                    Button("取消") { dismiss() }.keyboardShortcut(.cancelAction)
+                    Button("确认导入") { onImport(folder) }.keyboardShortcut(.defaultAction)
+                        .buttonStyle(.borderedProminent).disabled(!validFolder)
+                }
             }
         }.padding(24).frame(width: 480)
+            .onChange(of: newFolderName) { _, _ in folderError = nil }
+            .onChange(of: newFolderParent) { _, _ in folderError = nil }
+    }
+    private func cancelFolderCreation() {
+        creatingFolder = false; folderError = nil; folderNameFocused = false
+    }
+    private func createFolder() {
+        do {
+            let created = try model.createFolder(name: newFolderName, parentID: newFolderParent.isEmpty ? nil : newFolderParent)
+            folder = created.id
+            cancelFolderCreation()
+        } catch { folderError = error.localizedDescription }
     }
 }

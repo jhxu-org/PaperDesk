@@ -297,14 +297,23 @@ final class AppModel: ObservableObject {
         defaults.set(Array(expandedFolderIDs), forKey: "expandedFolderIDs")
     }
     func saveFolder(name: String, parentID: String?) throws {
-        guard let repository else { throw PaperDeskError.message("书库尚未就绪。") }
         var folder = editingFolder ?? LibraryFolder(name: name)
         folder.name = name
         folder.parentID = parentID
+        try persistFolder(folder)
+        folderFilter = folder.id; sidebarTab = "library"; showFolderEditor = false
+    }
+    func createFolder(name: String, parentID: String?) throws -> LibraryFolder {
+        let folder = LibraryFolder(name: name, parentID: parentID)
+        try persistFolder(folder)
+        return folder
+    }
+    private func persistFolder(_ folder: LibraryFolder) throws {
+        guard !isMovingStorage else { throw PaperDeskError.message("正在迁移书库，请稍后再创建或修改文件夹。") }
+        guard let repository else { throw PaperDeskError.message("书库尚未就绪。") }
         try repository.database.save(folder); try refreshLibrary()
         expandedFolderIDs.formUnion(folderHierarchy.ancestorIDs(of: folder.id))
         defaults.set(Array(expandedFolderIDs), forKey: "expandedFolderIDs")
-        folderFilter = folder.id; sidebarTab = "library"; showFolderEditor = false
     }
     func deleteFolder(_ folder: LibraryFolder) {
         do { try repository?.database.deleteFolder(id: folder.id); try refreshLibrary(); notify("文件夹及子目录已删除，论文、笔记和对话均已保留") }
