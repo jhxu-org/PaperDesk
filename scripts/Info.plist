@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+    <key>CFBundleName</key><string>PaperDesk</string>
+    <key>CFBundleDisplayName</key><string>PaperDesk</string>
+    <key>CFBundleExecutable</key><string>PaperDesk</string>
+    <key>CFBundleIdentifier</key><string>com.paperdesk.mac</string>
+    <key>CFBundleVersion</key><string>22</string>
+    <key>CFBundleShortVersionString</key><string>0.11.1</string>
+    <key>CFBundlePackageType</key><string>APPL</string>
+    <key>CFBundleIconFile</key><string>PaperDeskLogo</string>
+    <key>LSMinimumSystemVersion</key><string>14.0</string>
+    <key>LSApplicationCategoryType</key><string>public.app-category.productivity</string>
+    <key>NSHighResolutionCapable</key><true/>
+    <key>NSPrincipalClass</key><string>NSApplication</string>
+    <key>CFBundleURLTypes</key><array><dict>
+        <key>CFBundleURLName</key><string>com.paperdesk.browser-import</string>
+        <key>CFBundleURLSchemes</key><array><string>paperdesk</string></array>
+        <key>CFBundleTypeRole</key><string>Viewer</string>
+    </dict></array>
+    <key>CFBundleDocumentTypes</key><array><dict>
+        <key>CFBundleTypeName</key><string>PDF document</string>
+        <key>CFBundleTypeRole</key><string>Viewer</string>
+        <key>LSHandlerRank</key><string>Alternate</string>
+        <key>LSItemContentTypes</key><array><string>com.adobe.pdf</string></array>
+    </dict></array>
+</dict></plist>

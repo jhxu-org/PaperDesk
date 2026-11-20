@@ -1,0 +1,11 @@
+PaperDesk logo v1
+Generated with the built-in image_gen tool.
+Transparent PNG, 2026-11-16.
+
+Use case: logo-brand
+Asset type: a finished macOS application icon and brand symbol for PaperDesk, a thoughtful PDF research reader with annotations, personal paper folders and AI-assisted reading.
+Primary request: Design ONE original, exceptionally polished, simple and memorable icon. This is a usable icon asset, not a mockup or a presentation board.
+Composition: square canvas, centered macOS-style smoothly rounded square occupying about 88% of the canvas, entirely transparent outside the rounded square. Inside is a strong warm-ivory abstract folded-paper mark: two carefully balanced solid paper planes form a subtle capital P through negative space, with a short mint-teal folded bookmark/annotation accent. The association should be paper, reading, and a thought kept on a page. Aim for an elegant custom silhouette with generous internal negative space; it must read clearly at 32 pixels. Symbol occupies about 60% of the tile.
+Palette: deep desaturated petrol teal tile (#285E63 / #214C52), warm ivory paper (#F8F5EC), one restrained soft mint accent (#8BCBC2), consistent with a calm scholarly desktop app.
+Style: contemporary premium editorial identity, precise vector-like geometry, subtly softened corners, restrained gentle depth from the paper fold only; largely flat solid shapes. Very subtle tonal variation in the teal tile, tiny soft grounding shadow if needed, no glossy reflections.
+Constraints: a single front-facing straight-on icon, symmetrical visual balance, high contrast, clean anti-aliased contours, genuinely transparent exterior. No wordmark, no other text, no labels, no sample sizes, no grid, no device, no desktop screenshot, no full bleed colored backdrop. No AI sparkle star, no robot, no brain, no magnifying glass, no generic stock open-book clipart, no photoreal paper texture, no elaborate gradients, no watermark. Do not resemble an existing company's logo.

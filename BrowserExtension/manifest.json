@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "PaperDesk · PDF 收集助手",
+  "version": "0.3.2",
+  "description": "将当前 PDF、网页内嵌 PDF 和 PDF 链接导入 Mac 上的 PaperDesk。",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyC2YHKlzdgXSPXtgXjf0rU3zOrwS9gW+CY9M3ouNw2QgCCpZ8RlhWbPl+iODusH3GobK2HRawHnuDYhRnlXeSNj/vai5EyNopxtzUlXh3lLIGyGEtFPgQsCj5UutxeoWYDiOgbgaSFys02QSld6t8jXHrxR7UmH3a6kgnmvHPLixjWDL3+x0HeQQK/hD8Kr/C5hTmqljxnHI7Sl6kLU8UQlE5nzxWpllf46LOBDQYEE/kcgy/JrBS9YvAArd6yoyh4cn1xNcatxJJA4ixhB3bVrNmMhkanmZEeO2QSIiR+xRplRDV3mfhoRkkVizEEdycbATqocvBau1HjeHpDsx3wIDAQAB",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "nativeMessaging",
+    "contextMenus",
+    "storage"
+  ],
+  "optional_host_permissions": [
+    "https://*/*",
+    "http://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "导入到 PaperDesk",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

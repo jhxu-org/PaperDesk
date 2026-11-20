@@ -1,0 +1,9 @@
+title = "PaperDesk publication checks"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Exact public Chrome extension identity key; not a private key or credential"
+regexTarget = "secret"
+regexes = ['''^MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyC2YHKlzdgXSPXtgXjf0rU3zOrwS9gW\+CY9M3ouNw2QgCCpZ8RlhWbPl\+iODusH3GobK2HRawHnuDYhRnlXeSNj/vai5EyNopxtzUlXh3lLIGyGEtFPgQsCj5UutxeoWYDiOgbgaSFys02QSld6t8jXHrxR7UmH3a6kgnmvHPLixjWDL3\+x0HeQQK/hD8Kr/C5hTmqljxnHI7Sl6kLU8UQlE5nzxWpllf46LOBDQYEE/kcgy/JrBS9YvAArd6yoyh4cn1xNcatxJJA4ixhB3bVrNmMhkanmZEeO2QSIiR\+xRplRDV3mfhoRkkVizEEdycbATqocvBau1HjeHpDsx3wIDAQAB$''']

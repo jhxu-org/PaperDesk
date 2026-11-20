@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PaperDesk · PDF 收集助手</title><link rel="stylesheet" href="popup.css"></head>
+<body>
+<header><img src="icons/icon128.png" width="34" height="34" alt="PaperDesk Logo"><div><strong>PaperDesk</strong><span>把文献带回阅读空间</span></div><span class="tag">FOR MAC</span></header>
+<main>
+  <div class="eyebrow">从浏览器，继续阅读</div>
+  <h1>收下这份 PDF。</h1>
+  <p class="intro">导入本地书库，接着高亮、做笔记，<br>或与模型讨论当前页面。</p>
+  <div id="candidates" aria-label="可导入的 PDF"></div>
+  <div id="empty" hidden>没有找到 PDF。请打开 PDF 页面，或在 PDF 链接上右键选择「导入 PDF 到 PaperDesk」。</div>
+  <button id="import" class="primary" disabled>导入到 PaperDesk <span>↗</span></button>
+  <button id="cancel" class="secondary" hidden>取消传输</button>
+  <section id="status" role="status" aria-live="polite" hidden><div id="message"></div><progress id="progress" max="100" hidden></progress></section>
+  <details><summary>首次使用 · 连接 Mac 应用</summary><ol><li>在 PaperDesk 菜单中打开「Chrome 扩展」。</li><li>点击「启用连接」，再加载此扩展。</li><li>回到 PDF 页面，点击「导入」。</li></ol><button id="check" class="secondary">检查连接</button></details>
+</main><footer>文件仅传至本机 · 每份最多 100 MB</footer>
+<script type="module" src="popup.js"></script>
+</body></html>

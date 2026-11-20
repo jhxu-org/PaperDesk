@@ -1,0 +1,49 @@
+.build/
+dist/
+.DS_Store
+*.xcodeproj/
+
+# Local editor state and generated files
+.swiftpm/
+.idea/
+.vscode/
+*.xcuserstate
+xcuserdata/
+__pycache__/
+*.pyc
+node_modules/
+coverage/
+tmp/
+output/
+
+# Credentials and private configuration (keep only deliberate templates)
+.env
+.env.*
+!.env.example
+*.local
+*.local.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.mobileprovision
+credentials.json
+secrets.json
+id_rsa*
+id_ed25519*
+
+# User libraries, paper files, QA payloads and archives never belong in source
+*.sqlite*
+*.db
+*.db-*
+*.pdf
+*.log
+*.jsonl
+*.har
+BrowserInbox/
+Documents/
+PaperDesk Library/
+*.app/
+*.dmg
+*.zip
+*.tar.gz
