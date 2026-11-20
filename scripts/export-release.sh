@@ -20,6 +20,8 @@ ditto dist/PaperDesk.app "$app_directory"
 for executable in PaperDesk PaperDeskBridge; do
     xcrun lipo -create "$arm_directory/$executable" "$intel_directory/$executable" -output "$app_directory/Contents/MacOS/$executable"
     xcrun lipo "$app_directory/Contents/MacOS/$executable" -verify_arch arm64 x86_64
+    # Remove debug symbol entries containing local object and source paths.
+    xcrun strip -S "$app_directory/Contents/MacOS/$executable"
 done
 codesign --force --sign - "$app_directory/Contents/MacOS/PaperDeskBridge"
 codesign --force --sign - "$app_directory"

@@ -79,9 +79,7 @@ private struct ChatWebContent: NSViewRepresentable {
         view.allowsLinkPreview = false
         view.navigationDelegate = context.coordinator
         context.coordinator.webView = view
-        let resources = Bundle.main.resourceURL?.appending(path: "PaperDesk_PaperDesk.bundle")
-        let bundle = resources.flatMap { Bundle(url: $0) } ?? Bundle.module
-        if let url = bundle.url(forResource: "index", withExtension: "html", subdirectory: "Chat") {
+        if let url = ChatResourceLocation.indexURL() {
             context.coordinator.documentURL = url
             view.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
         } else { context.coordinator.fail() }

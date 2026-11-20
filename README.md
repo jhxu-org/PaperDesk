@@ -60,7 +60,13 @@ open dist/PaperDesk.app
 
 ### 安装已导出的包
 
-若你收到项目维护者导出的 DMG，将 `PaperDesk.app` 拖入 Applications 后运行。ZIP 需先解压，再将应用放到固定位置。完整步骤见 [安装指南](Distribution/安装指南.html)。本仓库提交源码，不将本地生成的安装包放入 Git；上面的构建命令可直接生成应用。
+前往 [GitHub Releases](https://github.com/jhxu-org/PaperDesk/releases) 下载预览版：
+
+- **Mac 应用**：下载 `PaperDesk-<版本>-macOS-universal.dmg`，将 `PaperDesk.app` 拖入 Applications。也提供应用 ZIP 作为替代。
+- **Chrome 扩展**：下载 `PaperDesk-Chrome-<版本>.zip`，解压后按下方扩展安装步骤加载。
+- **校验与指南**：同一 Release 附带 `SHA256SUMS.txt` 和安装指南。校验和用于检查文件是否与发布内容一致，不能代替开发者签名。
+
+完整步骤见 [安装指南](Distribution/安装指南.html)。二进制包作为 Release 附件提供，不放入 Git 源码历史；上面的构建命令也可自行生成应用。
 
 当前打包脚本只做 ad-hoc 签名，**尚未提供 Apple Developer ID 签名或公证**。macOS 可能要求在「系统设置 → 隐私与安全性」中允许打开；只对确认来源的安装包操作，不需要关闭系统安全机制。
 
@@ -265,6 +271,10 @@ python3 scripts/check-network-privacy.py
 # 原生输入框、输入法确认和回车行为
 swiftc Sources/PaperDesk/ChatInputView.swift Tests/ChatInput/ChatInputChecks.swift -o .build/ChatInputChecks
 .build/ChatInputChecks
+
+# 构建应用后，验证安装包和 SwiftPM 的离线聊天资源定位
+swiftc Sources/PaperDesk/ChatResourceLocation.swift Tests/ChatRendering/ResourceChecks.swift -o .build/ResourceChecks
+.build/ResourceChecks dist/PaperDesk.app "$(swift build -c release --arch arm64 --show-bin-path)"
 ```
 
 `PaperDeskChecks` 是不依赖 XCTest 的检查程序，便于仅装 Command Line Tools 的机器运行。覆盖 PDF 导入、书库持久化、嵌套目录、备份恢复、存储迁移、检索、后台导入、凭据隔离、协议边界和取消等功能。
@@ -289,7 +299,7 @@ swift run PaperDeskChecks --fixture http://127.0.0.1:18765/v1
 bash scripts/export-release.sh
 ```
 
-输出至 `dist/Releases/<应用版本>/`：Universal DMG、Mac ZIP、Chrome 扩展 ZIP、安装指南与 `SHA256SUMS.txt`。脚本分别构建 arm64 和 x86_64，再合并二进制并验证本机签名；它不执行 Developer ID 签名、公证或上传发布。
+输出至 `dist/Releases/<应用版本>/`：Universal DMG、Mac ZIP、Chrome 扩展 ZIP、安装指南与 `SHA256SUMS.txt`。脚本分别构建 arm64 和 x86_64，再合并二进制、移除含本机路径的调试符号并验证本机签名；它不执行 Developer ID 签名、公证或上传发布。聊天资源按安装位置查找，不将开发机资源路径写入发行二进制。
 
 ### 提交前检查
 
